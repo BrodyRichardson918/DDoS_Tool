@@ -1,1 +1,22 @@
 
+import json
+import os
+
+class OperationConsole:
+    """操作控制台"""
+    CONFIG_FILE = "DDoSData.config"  # 配置文件名称
+
+    @staticmethod
+    def config():
+        """配置输入"""
+        # 检查是否存在上次使用的配置文件
+        if os.path.exists(OperationConsole.CONFIG_FILE):
+            use_last_config = input(Fore.GREEN + "检测到上次的配置，是否使用上次配置？(y/N): ").strip().lower()
+            if use_last_config == 'y':
+                # 读取并返回配置
+                with open(OperationConsole.CONFIG_FILE, 'r') as f:
+                    saved_config = json.load(f)
+                    targets = saved_config['targets']
+                    config = saved_config['config']
+                    print(Fore.CYAN + "已加载上次的配置")
+                    return targets, config
